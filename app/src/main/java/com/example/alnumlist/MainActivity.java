@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+
     public void fragmentChanger(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -26,5 +27,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 
 }
