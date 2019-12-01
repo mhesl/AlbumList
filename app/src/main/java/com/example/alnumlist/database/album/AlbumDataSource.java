@@ -13,7 +13,6 @@ import java.util.List;
 public class AlbumDataSource {
     private static MySqlOpenHelper mySqlOpenHelper;
     private SQLiteDatabase sqLiteDatabase;
-    private List<Album_Model> album_models;
     private static AlbumDataSource uniqueInstance;
 
     private AlbumDataSource(Context context) {
