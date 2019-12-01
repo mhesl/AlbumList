@@ -34,24 +34,6 @@ public class MainFragment extends Fragment {
         recyclerView = view.findViewById(R.id.main_recycler_view);
         //album_models = AlbumDataSource.getInstance().getAlbums();
         mainAdapter = new MainAdapter(getActivity() , album_models);
-        ApiInterface apiInterface = NetworkHandler.getRetrofit().create(ApiInterface.class);
-        Call<List<Album_Model>> call = apiInterface.getUsers();
-        Log.d("retrofit", "onResponse: " + "d");
-        call.enqueue(new Callback<List<Album_Model>>() {
-            @Override
-            public void onResponse(Call<List<Album_Model>> call, Response<List<Album_Model>> response) {
-                Log.d("retrofit", "onResponse: " +"g");
-                if (response.isSuccessful()) {
-                    List<Album_Model> posts = response.body();
-                    Log.d("retrofit", "onResponse: " + posts.get(1).getTitle());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Album_Model>> call, Throwable t) {
-                Log.d("retrofit", "onFailure: ");
-            }
-        });
         return view;
     }
 }
