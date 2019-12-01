@@ -1,7 +1,6 @@
 package com.example.alnumlist;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.adapter.MainAdapter;
 import com.example.alnumlist.database.album.AlbumDataSource;
 import com.example.alnumlist.models.Album_Model;
-import com.example.alnumlist.webservice.ApiInterface;
-import com.example.alnumlist.webservice.NetworkHandler;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -32,8 +27,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_recycler_view , container , false);
         recyclerView = view.findViewById(R.id.main_recycler_view);
-        //album_models = AlbumDataSource.getInstance().getAlbums();
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 2));
+        album_models = AlbumDataSource.getInstance().getAlbums();
         mainAdapter = new MainAdapter(getActivity() , album_models);
+        recyclerView.setAdapter(mainAdapter);
         return view;
     }
 }

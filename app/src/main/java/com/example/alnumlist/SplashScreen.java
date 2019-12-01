@@ -2,7 +2,9 @@ package com.example.alnumlist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.alnumlist.database.album.AlbumDataSource;
@@ -23,7 +25,8 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         AlbumDataSource.initialize(getApplicationContext());
-        if(AlbumDataSource.getInstance().getAlbums().size()>0) {
+        AlbumDataSource.getInstance().open();
+        if(AlbumDataSource.getInstance().getAlbums().size()==0) {
             ApiInterface apiInterface = NetworkHandler.getRetrofit().create(ApiInterface.class);
             Call<List<Album_Model>> call = apiInterface.getUsers();
             Log.d("retrofit", "onResponse: " + "d");
@@ -42,6 +45,15 @@ public class SplashScreen extends AppCompatActivity {
                 }
             });
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(SplashScreen.this,
+                        MainActivity.class);
+                startActivity(i);
+                finish();
 
+            }
+        }, 10000);
     }
 }
