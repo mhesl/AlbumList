@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.adapter.MainAdapter;
+import com.example.alnumlist.database.album.AlbumDataSource;
 import com.example.alnumlist.models.Album_Model;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_recycler_view , container , false);
         recyclerView = view.findViewById(R.id.main_recycler_view);
+        album_models = AlbumDataSource.getInstance().getAlbums();
         mainAdapter = new MainAdapter(getActivity() , album_models);
         return view;
     }
