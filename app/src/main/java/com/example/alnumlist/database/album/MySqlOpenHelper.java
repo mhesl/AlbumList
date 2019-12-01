@@ -1,10 +1,10 @@
-package com.example.alnumlist.database;
+package com.example.alnumlist.database.album;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import com.example.alnumlist.database.album.Contract;
 
 public class MySqlOpenHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "database";

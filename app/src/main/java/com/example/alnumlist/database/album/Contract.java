@@ -1,4 +1,4 @@
-package com.example.alnumlist.database;
+package com.example.alnumlist.database.album;
 
 public class Contract {
     public static final String CREATE_TABLE_MODEL =
