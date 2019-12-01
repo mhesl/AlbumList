@@ -4,11 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.alnumlist.database.album.AlbumDataSource;
-import com.example.alnumlist.database.album.Contract;
-import com.example.alnumlist.database.album.MySqlOpenHelper;
 import com.example.alnumlist.models.Album_Details_Model;
-import com.example.alnumlist.models.Album_Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +33,6 @@ public class PhotoDataSource {
     }
 
 
-
     public void open() {
         sqLiteDatabase = photoSqlOpenHelper.getWritableDatabase();
     }
@@ -47,7 +42,7 @@ public class PhotoDataSource {
     }
 
 
-    public List<Album_Details_Model> getAlbumPhotos(int id){
+    public List<Album_Details_Model> getAlbumPhotos(int id) {
         String queryString = "select * from " + PhotoContract.PSI.TABLE_NAME;
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
         List<Album_Details_Model> photos = new ArrayList<>();
@@ -72,7 +67,7 @@ public class PhotoDataSource {
     }
 
 
-    public Album_Details_Model getSinglePhoto(int id){
+    public Album_Details_Model getSinglePhoto(int id) {
         String queryString = "select * from " + PhotoContract.PSI.TABLE_NAME;
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
         Album_Details_Model photo = new Album_Details_Model();
