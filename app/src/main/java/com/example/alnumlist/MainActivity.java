@@ -6,17 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.alnumlist.models.Album_Model;
-import com.example.alnumlist.webservice.ApiInterface;
-import com.example.alnumlist.webservice.NetworkHandler;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.alnumlist.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
