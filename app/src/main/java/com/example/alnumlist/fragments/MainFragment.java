@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.alnumlist.Photo;
 import com.example.alnumlist.R;
 import com.example.alnumlist.adapter.MainAdapter;
 import com.example.alnumlist.database.album.AlbumDataSource;
@@ -39,7 +40,7 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
     @Override
     public void showPhotos(int adapterPosition) {
         int id = album_models.get(adapterPosition).getId();
-        Intent intent = new Intent(getActivity(), PhotosFragment.class);
+        Intent intent = new Intent(getActivity(), Photo.class);
         intent.putExtra("id" , id+"");
         startActivity(intent);
     }

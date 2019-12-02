@@ -1,10 +1,13 @@
 package com.example.alnumlist.database.photo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.alnumlist.database.album.Contract;
 import com.example.alnumlist.models.Album_Details_Model;
+import com.example.alnumlist.models.Album_Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,23 @@ public class PhotoDataSource {
         photoSqlOpenHelper.close();
     }
 
+    public int getPhotoCounts(){
+        String queryString = "select * from " + PhotoContract.PSI.TABLE_NAME;
+        List<Album_Details_Model> models = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+        try {
+            while (cursor.moveToNext()) {
+                Album_Details_Model model = new Album_Details_Model();
+                model.setUrl(cursor.getString(cursor.getColumnIndex(PhotoContract.PSI.COLUMN_PHOTO_URL)));
+                models.add(model);
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return models.size();
+    }
 
     public List<Album_Details_Model> getAlbumPhotos(int id) {
         String queryString = "select * from " + PhotoContract.PSI.TABLE_NAME;
@@ -87,6 +107,19 @@ public class PhotoDataSource {
             }
         }
         return photo;
+    }
+
+    public void addAllPhotos(List<Album_Details_Model> models){
+        for (int i = 0; i < models.size(); i++) {
+            Album_Details_Model model = models.get(i);
+            ContentValues values = new ContentValues();
+            values.put(PhotoContract.PSI.COLUMN_ALBUM_ID, model.getAlbumId());
+            values.put(PhotoContract.PSI.COLUMN_PHOTO_ID, model.getId());
+            values.put(PhotoContract.PSI.COLUMN_PHOTO_THUMBNAIL, model.getThumbnailUrl());
+            values.put(PhotoContract.PSI.COLUMN_PHOTO_URL, model.getUrl());
+            values.put(PhotoContract.PSI.COLUMN_PHOTO_TITLE, model.getTitle());
+            sqLiteDatabase.insertWithOnConflict(PhotoContract.PSI.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        }
     }
 
 }
