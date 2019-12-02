@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,11 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
  private Context context;
  private List<Album_Model> album_models;
-
-    public MainAdapter(Context context, List<Album_Model> album_models) {
+ public addListener addListener;
+    public MainAdapter(Context context, List<Album_Model> album_models , addListener addListener) {
         this.context = context;
         this.album_models = album_models;
+        this.addListener = addListener;
     }
 
     @NonNull
@@ -32,6 +34,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.setClickListener();
         holder.albumTitle.setText(album_models.get(position).getTitle());
     }
 
@@ -40,12 +43,29 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         return album_models.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView albumTitle;
+        private ImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             albumTitle =itemView.findViewById(R.id.albumTitle);
+            imageView = itemView.findViewById(R.id.imageView);
+            albumTitle.setOnClickListener(this);
+            imageView.setOnClickListener(this);
         }
+        void setClickListener(){
+            albumTitle.setOnClickListener(this);
+            imageView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+
+        }
+    }
+
+
+    public interface addListener {
+        void showPhotos(int adapterPosition);
     }
 }

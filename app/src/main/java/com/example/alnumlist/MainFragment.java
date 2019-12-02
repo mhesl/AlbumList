@@ -1,5 +1,6 @@
 package com.example.alnumlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.example.alnumlist.models.Album_Model;
 import java.util.List;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements MainAdapter.addListener {
     private RecyclerView recyclerView;
     private MainAdapter mainAdapter;
     private List<Album_Model> album_models;
@@ -29,8 +30,16 @@ public class MainFragment extends Fragment {
         recyclerView = view.findViewById(R.id.main_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 2));
         album_models = AlbumDataSource.getInstance().getAlbums();
-        mainAdapter = new MainAdapter(getActivity() , album_models);
+        mainAdapter = new MainAdapter(getActivity() , album_models , this);
         recyclerView.setAdapter(mainAdapter);
         return view;
+    }
+
+    @Override
+    public void showPhotos(int adapterPosition) {
+        int id = album_models.get(adapterPosition).getId();
+        Intent intent = new Intent(getActivity(),);
+        intent.putExtra("id" , id+"");
+        startActivity(intent);
     }
 }
