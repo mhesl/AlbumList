@@ -39,7 +39,7 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
     @Override
     public void showPhotos(int adapterPosition) {
         int id = album_models.get(adapterPosition).getId();
-        Intent intent = new Intent(getActivity(),);
+        Intent intent = new Intent(getActivity(), PhotosFragment.class);
         intent.putExtra("id" , id+"");
         startActivity(intent);
     }
