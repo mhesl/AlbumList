@@ -64,6 +64,10 @@ public class PhotoDataSource {
 
     public List<Album_Details_Model> getAlbumPhotos(int id) {
         String queryString = "select * from " + PhotoContract.PSI.TABLE_NAME;
+        String where = PhotoContract.PSI.COLUMN_ALBUM_ID + " = ?";
+        String idd = id+"";
+        String[] whereArgs = {idd};
+        //Cursor cursor = sqLiteDatabase.query(PhotoContract.PSI.TABLE_NAME , null , where , whereArgs ,null ,null,null);
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
         List<Album_Details_Model> photos = new ArrayList<>();
         try {

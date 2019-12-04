@@ -30,7 +30,7 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_recycler_view , container , false);
         recyclerView = view.findViewById(R.id.main_recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 1));
         album_models = AlbumDataSource.getInstance().getAlbums();
         mainAdapter = new MainAdapter(getActivity() , album_models , this);
         recyclerView.setAdapter(mainAdapter);
