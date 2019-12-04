@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_photo_library_black_24dp"
+        android:title="Albums"
+        android:id="@+id/postsNavigation"/>
+    <item
+        android:icon="@drawable/ic_rate_star_button"
+        android:title="Favorites"
+        android:id="@+id/contentsNavigation"/>
 
 </menu>

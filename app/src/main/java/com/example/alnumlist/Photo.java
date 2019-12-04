@@ -52,7 +52,6 @@ public class Photo extends AppCompatActivity implements PhotosAdapter.addListene
         fullScreenImageView = findViewById(R.id.full_size_profile_picture);
         String id = (getIntent().getStringExtra("id"));
         rootView = findViewById(R.id.root);
-        view = LayoutInflater.from(this).inflate(R.layout.animate_layout ,null);
         Log.d("retrofit", "onResume: " + id);
         models = PhotoDataSource.getInstance().getAlbumPhotos(Integer.valueOf(id));
         photosAdapter = new PhotosAdapter(models , this , this);
