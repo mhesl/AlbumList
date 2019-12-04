@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.R;
+import com.example.alnumlist.database.favorite.FavoriteDataSource;
 import com.example.alnumlist.models.Album_Model;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     private Context context;
     private List<Album_Model> album_models;
     private MutableLiveData<List<Album_Model>> favorties;
-
+    private List<Album_Model> models;
     public addListener addListener;
 
     public MainAdapter(Context context, List<Album_Model> album_models, addListener addListener) {
@@ -33,6 +34,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.album_model, parent, false);
+        models=FavoriteDataSource.getInstance().getAlbums();
+        favorties.setValue(models);
         return new MyViewHolder(view);
     }
 
@@ -46,6 +49,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     public int getItemCount() {
         return album_models.size();
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView albumTitle;
@@ -72,6 +76,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         public void onClick(View view) {
             if (view.getId() == R.id.albumTitle) {
                 addListener.showPhotos(getAdapterPosition());
+            }
+            if(view.getId()==R.id.addToFavorite){
+                models.add(album_models.get(getAdapterPosition()));
+                favorties.postValue(models);
             }
         }
     }
