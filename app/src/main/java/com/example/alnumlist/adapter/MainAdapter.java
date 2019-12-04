@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.R;
@@ -16,10 +17,13 @@ import com.example.alnumlist.models.Album_Model;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
- private Context context;
- private List<Album_Model> album_models;
- public addListener addListener;
-    public MainAdapter(Context context, List<Album_Model> album_models , addListener addListener) {
+    private Context context;
+    private List<Album_Model> album_models;
+    private MutableLiveData<List<Album_Model>> favorties;
+
+    public addListener addListener;
+
+    public MainAdapter(Context context, List<Album_Model> album_models, addListener addListener) {
         this.context = context;
         this.album_models = album_models;
         this.addListener = addListener;
@@ -28,7 +32,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.album_model , parent , false);
+        View view = LayoutInflater.from(context).inflate(R.layout.album_model, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -46,21 +50,27 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView albumTitle;
         private ImageView imageView;
+        private TextView addToFavorite;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            albumTitle =itemView.findViewById(R.id.albumTitle);
+            albumTitle = itemView.findViewById(R.id.albumTitle);
             imageView = itemView.findViewById(R.id.imageView);
+            addToFavorite = itemView.findViewById(R.id.addToFavorite);
+            addToFavorite.setOnClickListener(this);
             albumTitle.setOnClickListener(this);
             imageView.setOnClickListener(this);
         }
-        void setClickListener(){
+
+        void setClickListener() {
+            addToFavorite.setOnClickListener(this);
             albumTitle.setOnClickListener(this);
             imageView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
-            if(view.getId() == R.id.albumTitle){
+            if (view.getId() == R.id.albumTitle) {
                 addListener.showPhotos(getAdapterPosition());
             }
         }

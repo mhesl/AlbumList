@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +29,11 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_recycler_view , container , false);
+        View view = inflater.inflate(R.layout.main_recycler_view, container, false);
         recyclerView = view.findViewById(R.id.main_recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         album_models = AlbumDataSource.getInstance().getAlbums();
-        mainAdapter = new MainAdapter(getActivity() , album_models , this);
+        mainAdapter = new MainAdapter(getActivity(), album_models, this);
         recyclerView.setAdapter(mainAdapter);
         return view;
     }
@@ -41,7 +42,7 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
     public void showPhotos(int adapterPosition) {
         int id = album_models.get(adapterPosition).getId();
         Intent intent = new Intent(getActivity(), Photo.class);
-        intent.putExtra("id" , id+"");
+        intent.putExtra("id", id + "");
         startActivity(intent);
     }
 }
