@@ -45,4 +45,9 @@ public class MainFragment extends Fragment implements MainAdapter.addListener {
         intent.putExtra("id", id + "");
         startActivity(intent);
     }
+
+    @Override
+    public void setNotify() {
+
+    }
 }

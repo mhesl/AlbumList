@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteDataSource {
-    private static MySqlOpenHelper mySqlOpenHelper;
+    private static FavoriteSqlOpenHelper mySqlOpenHelper;
     private SQLiteDatabase sqLiteDatabase;
     private static FavoriteDataSource uniqueInstance;
 
     private FavoriteDataSource(Context context) {
-        mySqlOpenHelper = new MySqlOpenHelper(context);
+        mySqlOpenHelper = new FavoriteSqlOpenHelper(context);
     }
     public static FavoriteDataSource getInstance() {
         if (uniqueInstance == null)
@@ -65,6 +65,14 @@ public class FavoriteDataSource {
         }
         return models;
     }
+
+
+    public boolean deleteTitle(int name)
+    {
+        return sqLiteDatabase.delete(FavoriteContract.FSI.TABLE_NAME, FavoriteContract.FSI.COLUMN_ALBUM_ID + "=" + name, null) > 0;
+    }
+
+
 
     public void addSingleAlbum(Album_Model model){
         ContentValues values = new ContentValues();

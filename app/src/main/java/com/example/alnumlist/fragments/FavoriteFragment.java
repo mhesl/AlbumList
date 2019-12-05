@@ -17,11 +17,12 @@ import com.example.alnumlist.R;
 import com.example.alnumlist.adapter.FavoriteFragmentAdapter;
 import com.example.alnumlist.adapter.MainAdapter;
 import com.example.alnumlist.database.album.AlbumDataSource;
+import com.example.alnumlist.database.favorite.FavoriteDataSource;
 import com.example.alnumlist.models.Album_Model;
 
 import java.util.List;
 
-public class FavoriteFragment extends Fragment implements FavoriteFragmentAdapter.addListener {
+public class FavoriteFragment extends Fragment implements FavoriteFragmentAdapter.addListener , MainAdapter.addListener {
     private RecyclerView recyclerView;
     private FavoriteFragmentAdapter mainAdapter;
     private List<Album_Model> album_models;
@@ -31,7 +32,9 @@ public class FavoriteFragment extends Fragment implements FavoriteFragmentAdapte
         View view = inflater.inflate(R.layout.favorite_fragment , container , false);
         recyclerView = view.findViewById(R.id.favorite_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity() , 1));
-
+        FavoriteDataSource.initialize(getActivity());
+        FavoriteDataSource.getInstance().open();
+        album_models = FavoriteDataSource.getInstance().getAlbums();
         mainAdapter = new FavoriteFragmentAdapter(getActivity() , album_models , this);
         recyclerView.setAdapter(mainAdapter);
         return view;
@@ -43,5 +46,10 @@ public class FavoriteFragment extends Fragment implements FavoriteFragmentAdapte
         Intent intent = new Intent(getActivity(), Photo.class);
         intent.putExtra("id" , id+"");
         startActivity(intent);
+    }
+
+    @Override
+    public void setNotify() {
+        mainAdapter.notifyDataSetChanged();
     }
 }

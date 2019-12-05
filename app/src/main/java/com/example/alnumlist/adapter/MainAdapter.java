@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.R;
@@ -20,9 +19,9 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private Context context;
     private List<Album_Model> album_models;
-    private MutableLiveData<List<Album_Model>> favorties;
-    private List<Album_Model> models;
     public addListener addListener;
+
+
 
     public MainAdapter(Context context, List<Album_Model> album_models, addListener addListener) {
         this.context = context;
@@ -34,8 +33,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.album_model, parent, false);
-        models=FavoriteDataSource.getInstance().getAlbums();
-        favorties.setValue(models);
         return new MyViewHolder(view);
     }
 
@@ -74,18 +71,20 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
         @Override
         public void onClick(View view) {
-            if (view.getId() == R.id.albumTitle) {
+            if (view.getId() == R.id.albumTitle || view.getId() == R.id.imageView) {
                 addListener.showPhotos(getAdapterPosition());
             }
             if(view.getId()==R.id.addToFavorite){
-                models.add(album_models.get(getAdapterPosition()));
-                favorties.postValue(models);
+                FavoriteDataSource.initialize(context);
+                FavoriteDataSource.getInstance().open();
+                FavoriteDataSource.getInstance().addSingleAlbum(album_models.get(getAdapterPosition()));
+                addListener.setNotify();
             }
         }
     }
 
-
     public interface addListener {
         void showPhotos(int adapterPosition);
+        void setNotify();
     }
 }

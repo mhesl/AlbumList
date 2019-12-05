@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AlnumList</string>
+    <string name="app_name">AlbumList</string>
+    <string name="url">https://jsonplaceholder.typicode.com/</string>
 </resources>

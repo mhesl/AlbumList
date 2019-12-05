@@ -32,53 +32,69 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                if (AlbumDataSource.getInstance().getAlbums().size() == 0) {
+                    Log.d("retrofit", "onCreate: " + AlbumDataSource.getInstance().getAlbums().size());
+                    ApiInterface apiInterface = NetworkHandler.getRetrofit().create(ApiInterface.class);
+                    Call<List<Album_Model>> call = apiInterface.getUsers();
+                    call.enqueue(new Callback<List<Album_Model>>() {
+                        @Override
+                        public void onResponse(Call<List<Album_Model>> call, Response<List<Album_Model>> response) {
+                            Log.d("retrofit", "onResponse: " + "g");
+                            if (response.isSuccessful()) {
+                                List<Album_Model> posts = response.body();
+                                AlbumDataSource.getInstance().addAllAlbums(posts);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Album_Model>> call, Throwable t) {
+                            Log.d("retrofit", "onFailure: ");
+                        }
+                    });
+                }
+            }
+        };
+        Runnable r2 = new Runnable() {
+            @Override
+            public void run() {
+                if (PhotoDataSource.getInstance().getPhotoCounts() == 0) {
+                    PhotoApiInterface apiInterface = NetworkHandler.getRetrofit().create(PhotoApiInterface.class);
+                    Call<List<Album_Details_Model>> call = apiInterface.getUsers();
+                    Log.d("retrofit", "onResponse: " + "photos");
+                    call.enqueue(new Callback<List<Album_Details_Model>>() {
+                        @Override
+                        public void onResponse(Call<List<Album_Details_Model>> call, Response<List<Album_Details_Model>> response) {
+                            Log.d("retrofit", "onResponse: " + "photos");
+                            if (response.isSuccessful()) {
+                                List<Album_Details_Model> posts = response.body();
+                                PhotoDataSource.getInstance().addAllPhotos(posts);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Album_Details_Model>> call, Throwable t) {
+                            Log.d("retrofit", "onFailure: ");
+                        }
+                    });
+                }
+            }
+        };
+
+
         if (isOnline()) {
+            Thread thread = new Thread(r);
+            Thread thread2 = new Thread(r2);
 
             AlbumDataSource.initialize(getApplicationContext());
             AlbumDataSource.getInstance().open();
             PhotoDataSource.initialize(getApplicationContext());
             PhotoDataSource.getInstance().open();
             Log.d("retrofit", "onCreate: " + AlbumDataSource.getInstance().getAlbums().size());
-            if (AlbumDataSource.getInstance().getAlbums().size() == 0) {
-                Log.d("retrofit", "onCreate: " + AlbumDataSource.getInstance().getAlbums().size());
-                ApiInterface apiInterface = NetworkHandler.getRetrofit().create(ApiInterface.class);
-                Call<List<Album_Model>> call = apiInterface.getUsers();
-                call.enqueue(new Callback<List<Album_Model>>() {
-                    @Override
-                    public void onResponse(Call<List<Album_Model>> call, Response<List<Album_Model>> response) {
-                        Log.d("retrofit", "onResponse: " + "g");
-                        if (response.isSuccessful()) {
-                            List<Album_Model> posts = response.body();
-                            AlbumDataSource.getInstance().addAllAlbums(posts);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Album_Model>> call, Throwable t) {
-                        Log.d("retrofit", "onFailure: ");
-                    }
-                });
-            }
-            if (PhotoDataSource.getInstance().getPhotoCounts() == 0) {
-                PhotoApiInterface apiInterface = NetworkHandler.getRetrofit().create(PhotoApiInterface.class);
-                Call<List<Album_Details_Model>> call = apiInterface.getUsers();
-                Log.d("retrofit", "onResponse: " + "photos");
-                call.enqueue(new Callback<List<Album_Details_Model>>() {
-                    @Override
-                    public void onResponse(Call<List<Album_Details_Model>> call, Response<List<Album_Details_Model>> response) {
-                        Log.d("retrofit", "onResponse: " + "photos");
-                        if (response.isSuccessful()) {
-                            List<Album_Details_Model> posts = response.body();
-                            PhotoDataSource.getInstance().addAllPhotos(posts);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Album_Details_Model>> call, Throwable t) {
-                        Log.d("retrofit", "onFailure: ");
-                    }
-                });
-            }
+            thread.start();
+            thread2.start();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -89,7 +105,7 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
 
                 }
-            }, 20000);
+            }, 2000);
         }
         else{
             new AlertDialog.Builder(this)

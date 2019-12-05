@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:background="#0A4E6D"
         android:layout_height="match_parent"
         android:id="@+id/favorite_recycler_view"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
