@@ -25,6 +25,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:id="@+id/layout_favorite"
             android:background="#2196F3">
 
             <ImageView
@@ -41,7 +42,7 @@
 
             <TextView
                 android:id="@+id/albumTitleFavorite"
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="cursive"
                 android:text="this is the album title"
@@ -51,28 +52,28 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewFavorite"
-                app:layout_constraintHorizontal_bias="0.179"
+                app:layout_constraintHorizontal_bias="0.166"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.254" />
+                app:layout_constraintVertical_bias="0.04" />
 
             <TextView
+                android:id="@+id/deleteFromFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete from favorites"
-                android:textColor="#000"
-                android:id="@+id/deleteFromFavorite"
-                android:textStyle="bold"
                 android:clickable="true"
                 android:focusable="true"
-                android:textSize="16sp"
                 android:fontFamily="casual"
+                android:text="Delete from favorites"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewFavorite"
-                app:layout_constraintHorizontal_bias="0.517"
+                app:layout_constraintHorizontal_bias="0.536"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/albumTitleFavorite"
-                app:layout_constraintVertical_bias="0.652" />
+                app:layout_constraintVertical_bias="0.757" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

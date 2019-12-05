@@ -1,6 +1,7 @@
 package com.example.alnumlist.adapter;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.R;
@@ -52,26 +54,29 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         private TextView albumTitle;
         private ImageView imageView;
         private TextView addToFavorite;
-
+        private ConstraintLayout layout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             albumTitle = itemView.findViewById(R.id.albumTitle);
             imageView = itemView.findViewById(R.id.imageView);
             addToFavorite = itemView.findViewById(R.id.addToFavorite);
+            layout = itemView.findViewById(R.id.layout_main);
             addToFavorite.setOnClickListener(this);
             albumTitle.setOnClickListener(this);
             imageView.setOnClickListener(this);
+            layout.setOnClickListener(this);
         }
 
         void setClickListener() {
             addToFavorite.setOnClickListener(this);
             albumTitle.setOnClickListener(this);
             imageView.setOnClickListener(this);
+            layout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (view.getId() == R.id.albumTitle || view.getId() == R.id.imageView) {
+            if (view.getId() == R.id.albumTitle || view.getId() == R.id.imageView || view.getId() == R.id.layout_main) {
                 addListener.showPhotos(getAdapterPosition());
             }
             if(view.getId()==R.id.addToFavorite){

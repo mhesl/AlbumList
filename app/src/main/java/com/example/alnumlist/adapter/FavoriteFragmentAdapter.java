@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alnumlist.R;
@@ -51,19 +52,22 @@ public class FavoriteFragmentAdapter extends RecyclerView.Adapter<FavoriteFragme
         private TextView albumTitle;
         private ImageView imageView;
         private TextView delete;
+        private ConstraintLayout layout;
         public MyVIewHolder(@NonNull View itemView) {
             super(itemView);
             albumTitle = itemView.findViewById(R.id.albumTitleFavorite);
             imageView = itemView.findViewById(R.id.imageViewFavorite);
             delete = itemView.findViewById(R.id.deleteFromFavorite);
+            layout = itemView.findViewById(R.id.layout_favorite);
             albumTitle.setOnClickListener(this);
             imageView.setOnClickListener(this);
             delete.setOnClickListener(this);
+            layout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(view.getId() == R.id.albumTitleFavorite ||view.getId() == R.id.imageViewFavorite ){
+            if(view.getId() == R.id.albumTitleFavorite ||view.getId() == R.id.imageViewFavorite || view.getId() == R.id.layout_favorite ){
                 addListener.showPhotos(getAdapterPosition());
             }
             if(view.getId() == R.id.deleteFromFavorite){
